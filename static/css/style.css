@@ -1,142 +1,95 @@
-/* Общий фон страницы с картинкой */
-body {
-    margin: 0;
-    padding: 0;
+/* Общий фон с твоей картинкой */
+.app-body {
     min-height: 100vh;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-
-    /* Фон: картинка + лёгкий градиент */
-    background:
-        linear-gradient(135deg, rgba(15, 23, 42, 0.55), rgba(37, 99, 235, 0.55)),
-        url("/static/kartinka/bg_pic.jpg") center center / cover no-repeat fixed;
-
+    margin: 0;
+    background: #f3f5fb url("../kartinka/bg_pic.jpg") center/cover no-repeat fixed;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 40px 16px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-/* Обёртка, чтобы карточка не прилипала к краям */
-.converter-wrapper {
+/* Белая “карточка” по центру */
+.app-container {
     width: 100%;
     max-width: 1100px;
-    padding: 24px;
-}
-
-/* Основная карточка */
-.converter-card {
     background: rgba(255, 255, 255, 0.96);
-    border-radius: 20px;
-    box-shadow:
-        0 18px 45px rgba(15, 23, 42, 0.35),
-        0 4px 10px rgba(15, 23, 42, 0.25);
-    padding: 32px 36px 30px;
+    border-radius: 24px;
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.18);
+    padding: 24px 32px 32px;
 }
 
-/* Заголовок */
-.converter-card .card-header {
-    background: transparent;
-    border-bottom: none;
-    padding-bottom: 8px;
+/* Навигация */
+.app-nav {
+    margin-bottom: 12px;
+}
+
+.app-logo {
+    font-size: 22px;
+}
+
+/* Основной контент */
+.app-main {
+    display: flex;
+    justify-content: center;
+}
+
+/* Карточка конвертера */
+.converter-card {
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+    border: none;
 }
 
 .converter-title {
-    font-size: 32px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    margin-bottom: 10px;
+    font-weight: 600;
 }
 
-/* Блок формы */
-.form-wrap {
-    border-radius: 18px;
+/* Кнопка конвертера */
+.converter-submit-btn {
+    border-radius: 999px;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+/* Welcome page layout */
+.welcome-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.welcome-card {
+    max-width: 640px;
+    border-radius: 20px;
+    box-shadow: 0 14px 40px rgba(15, 23, 42, 0.15);
     border: none;
 }
 
-.form-group label {
+.welcome-title {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.welcome-subtitle {
+    font-size: 15px;
+    color: #6b7280;
+}
+
+.welcome-features li {
     font-size: 14px;
-    font-weight: 500;
     color: #4b5563;
 }
 
-.form-control {
-    border-radius: 10px;
-    border: 1px solid #d1d5db;
-    height: 46px;
-    font-size: 14px;
-}
-
-.form-control:focus {
-    border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
-}
-
-/* Карточка результата */
+/* Card with result on converter */
 .result-card {
-    border-radius: 16px;
-    margin-top: 16px;
-}
-
-.result-card .card-header {
-    background-color: #f9fafb;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.result-card .card-body {
-    height: auto;
-    padding: 22px 16px;
-    font-size: 18px;
-}
-
-/* Кнопка */
-.submit-btn {
-    text-align: center;
-}
-
-.submit-btn .btn-primary {
-    width: 100%;
-    max-width: 320px;
-    border-radius: 999px;
-    padding: 12px 0;
-    font-size: 17px;
-    font-weight: 600;
+    border-radius: 14px;
     border: none;
-    background: linear-gradient(90deg, #2563eb, #1d4ed8);
-    box-shadow: 0 12px 25px rgba(37, 99, 235, 0.4);
-    transition: transform 0.1s ease-out, box-shadow 0.1s ease-out, opacity 0.1s;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
 }
 
-.submit-btn .btn-primary:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 14px 30px rgba(37, 99, 235, 0.5);
-    opacity: 0.97;
-}
-
-.submit-btn .btn-primary:active {
-    transform: translateY(1px);
-    box-shadow: 0 6px 14px rgba(37, 99, 235, 0.35);
-}
-
-/* Сообщения об ошибках */
-.alert {
-    border-radius: 10px;
-}
-
-/* Адаптивность */
-@media (max-width: 768px) {
-    body {
-        align-items: flex-start;
-    }
-
-    .converter-wrapper {
-        padding: 16px;
-        margin-top: 20px;
-    }
-
-    .converter-card {
-        padding: 20px 18px 22px;
-    }
-
-    .converter-title {
-        font-size: 26px;
-    }
+/* Небольшие отступы для формы конвертера */
+.converter-form-wrapper {
+    max-width: 420px;
 }

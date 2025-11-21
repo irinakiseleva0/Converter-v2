@@ -1,42 +1,58 @@
 {% extends 'exchange_app/base.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Registration</title>
-    <link rel="stylesheet" href="style_reg.css">
-</head>
-
-<body>
-    <form action="" method="POST">
-        <h1 title="Registration Form">Registration</h1>
-
-        <div class="group">
-            <label for="username">Username:</label>
-            <input id="username" name="username" type="text" required>
+{% block content %}
+<div class="register-wrapper">
+    <div class="register-card card">
+        <div class="card-header text-center">
+            <h3 class="converter-title">Create an account</h3>
+            <p class="text-muted mb-0" style="font-size: 14px;">
+                Registration is optional – you can also continue without an account.
+            </p>
         </div>
 
-        <div class="group">
-            <label for="password">Password:</label>
-            <input id="password" name="password" type="password" required>
-        </div>
+        <form method="POST" class="p-3">
+            {% csrf_token %}
 
-        <div class="group">
-            <label for="password_confirm">Confirm Password:</label>
-            <input id="password_confirm" name="password_confirm" type="password" required>
-        </div>
+            {% if messages %}
+            <div class="mt-2 mb-2">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} text-center mb-2">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
 
-        <div class="group">
-            <label for="email">Email:</label>
-            <input id="email" name="email" type="email" required>
-        </div>
+            <div class="form-group">
+                <label for="username">Username *</label>
+                <input id="username" type="text" name="username" class="form-control" required>
+            </div>
 
-        <div class="group" style="text-align: center;">
-            <button type="submit">Register</button>
-        </div>
-    </form>
-</body>
+            <div class="form-group">
+                <label for="email">Email (optional)</label>
+                <input id="email" type="email" name="email" class="form-control">
+            </div>
 
-</html>
+            <div class="form-group">
+                <label for="password1">Password *</label>
+                <input id="password1" type="password" name="password1" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password2">Password again *</label>
+                <input id="password2" type="password" name="password2" class="form-control" required>
+            </div>
+
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-stretch mt-3">
+                <button type="submit" class="btn btn-primary mb-2 mb-md-0">
+                    Sign up
+                </button>
+
+                <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+                    Continue without registration
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

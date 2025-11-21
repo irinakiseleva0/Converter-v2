@@ -1,5 +1,16 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth.models import User
 import requests
+
+
+def welcome(request):
+    """
+    Landing page: welcome text + buttons:
+    - Go to converter
+    - Register (optional)
+    """
+    return render(request, 'exchange_app/welcome.html')
 
 
 def exchange(request):
@@ -43,4 +54,27 @@ def exchange(request):
 
 
 def REG_FUNC(request):
+    """Simple optional registration."""
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+        email = request.POST.get('email')
+
+        if not username or not password1 or not password2:
+            messages.error(request, "Please fill all required fields.")
+        elif password1 != password2:
+            messages.error(request, "Passwords do not match.")
+        elif User.objects.filter(username=username).exists():
+            messages.error(request, "This username is already taken.")
+        else:
+            User.objects.create_user(
+                username=username,
+                email=email,
+                password=password1
+            )
+            messages.success(request, "Registration successful! You can now use the converter.")
+            # После успешной регистрации сразу на конвертер
+            return redirect('converter')
+
     return render(request, 'exchange_app/index_reg.html')

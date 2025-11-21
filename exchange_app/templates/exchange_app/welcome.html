@@ -1,0 +1,30 @@
+{% extends 'exchange_app/base.html' %}
+
+{% block content %}
+<div class="welcome-wrapper">
+    <div class="welcome-card card">
+        <div class="card-body text-center">
+            <h1 class="welcome-title mb-3">Welcome to Currency Converter</h1>
+            <p class="welcome-subtitle mb-4">
+                Quickly convert between dozens of world currencies using live exchange rates.
+                No account is required – just enter an amount and choose your currencies.
+            </p>
+
+            <ul class="welcome-features list-unstyled mb-4">
+                <li>• Real-time exchange rates</li>
+                <li>• Simple and clean interface</li>
+                <li>• Works on desktop and mobile</li>
+            </ul>
+
+            <div class="d-flex flex-column flex-md-row justify-content-center align-items-stretch gap-2">
+                <a href="{% url 'converter' %}" class="btn btn-primary btn-lg mb-2 mb-md-0 mr-md-2">
+                    Start converting
+                </a>
+                <a href="{% url 'register' %}" class="btn btn-outline-secondary btn-lg">
+                    Register (optional)
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -67,3 +67,29 @@ button {
 button:hover {
     background: #0056cc;
 }
+
+.register-wrapper {
+    width: 100%;
+    max-width: 420px;
+    margin: 40px auto;
+}
+
+.register-card {
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 18px;
+    box-shadow:
+        0 18px 45px rgba(15, 23, 42, 0.35),
+        0 4px 10px rgba(15, 23, 42, 0.25);
+    padding: 22px 26px 26px;
+}
+
+.register-card .card-header {
+    background: transparent;
+    border-bottom: none;
+    padding-bottom: 4px;
+}
+
+.register-card .converter-title {
+    font-size: 26px;
+    margin-bottom: 8px;
+}
