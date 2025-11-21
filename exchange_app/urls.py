@@ -1,9 +1,7 @@
 from django.urls import path
-from .views import exchange,  REG_FUNC
-
+from .views import exchange, REG_FUNC
 
 urlpatterns = [
-    path('exchange-app', exchange),
-    path('', REG_FUNC),
-    #path('about_us',)
+    path('', exchange, name='home'),
+    path('register/', REG_FUNC, name='register'),
 ]

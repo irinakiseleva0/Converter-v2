@@ -4,12 +4,10 @@ import requests
 
 def exchange(request):
     try:
-        response = requests.get(
-            'https://api.exchangerate-api.com/v4/latest/USD')
+        response = requests.get('https://api.exchangerate-api.com/v4/latest/USD', timeout=5)
         data = response.json()
         currencies = data.get('rates', {})
     except Exception:
-
         currencies = {}
 
     context = {
@@ -32,8 +30,7 @@ def exchange(request):
 
             if from_curr in currencies and to_curr in currencies:
                 converted_amount = round(
-                    (currencies[to_curr] /
-                     currencies[from_curr]) * from_amount,
+                    (currencies[to_curr] / currencies[from_curr]) * from_amount,
                     2
                 )
                 context['converted_amount'] = converted_amount
@@ -46,5 +43,4 @@ def exchange(request):
 
 
 def REG_FUNC(request):
-
     return render(request, 'exchange_app/index_reg.html')

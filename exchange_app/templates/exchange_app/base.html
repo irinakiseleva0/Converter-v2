@@ -18,6 +18,10 @@
 </head>
 
 <body>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style_reg.css' %}">
+
 
     {% block content %}
     {% endblock %}
@@ -27,4 +31,5 @@
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-KhVO7Zf7Dz3QnxO+thq1vYIVl28szO2I7zxObn0tVfV0pSV2QnN
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-KhVO7Zf7Dz3QnxO+thq1vYIVl28szO2I7zxObn0tVfV0pSV2QnN

@@ -1,71 +1,84 @@
-{% extends 'base.html' %}
+{% extends 'exchange_app/base.html' %}
 
 {% block content %}
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="card box-shadow m-2 form-wrap col-md-10">
-                <div class="card-header text-center">
-                    <h3>Currency Converter</h3>
+<div class="converter-wrapper">
+    <div class="converter-card card">
+        <div class="card-header text-center">
+            <h3 class="converter-title">Currency Converter</h3>
+        </div>
+
+        <form id="form" class="p-3" action="" method="POST">
+            {% csrf_token %}
+
+            <div class="form-row">
+                <!-- Amount -->
+                <div class="form-group col-md-4 mb-3">
+                    <label for="amount">Amount</label>
+                    <input
+                        id="amount"
+                        type="number"
+                        class="form-control"
+                        name="from-amount"
+                        required
+                        {% if from_amount %}value="{{ from_amount }}"{% endif %}
+                    >
                 </div>
 
-                <form id="form" class="p-3" action="" method="POST">
-                    {% csrf_token %}
-                    <div class="form-row">
-                        <div class="form-group col-md-4 mb-0">
-                            <label for="amount">Amount</label>
-                            <input
-                                id="amount"
-                                type="number"
-                                class="form-control"
-                                name="from-amount"
-                                {% if from_amount %}value="{{ from_amount }}"{% endif %}
-                            >
-                        </div>
+                <!-- From currency -->
+                <div class="form-group col-md-4 mb-3">
+                    <label for="from_curr">From currency</label>
+                    <select class="form-control" id="from_curr" name="from-curr">
+                        {% for curr in currencies %}
+                            <option value="{{ curr }}" {% if from_curr == curr %}selected{% endif %}>
+                                {{ curr }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
 
-                        <div class="form-group col-md-4 mb-0">
-                            <label for="from_curr">From currency</label>
-                            <select class="form-control" id="from_curr" name="from-curr">
-                                {% for curr in currencies %}
-                                    <option value="{{ curr }}" {% if from_curr == curr %}selected{% endif %}>
-                                        {{ curr }}
-                                    </option>
-                                {% endfor %}
-                            </select>
-                        </div>
-
-                        <div class="form-group col-md-4 mb-0">
-                            <label for="to-curr">To currency</label>
-                            <select class="form-control" id="to-curr" name="to-curr">
-                                {% for curr in currencies %}
-                                    <option value="{{ curr }}" {% if to_curr == curr %}selected{% endif %}>
-                                        {{ curr }}
-                                    </option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
-
-                    <hr>
-
-                    {% if converted_amount %}
-                        <div class="card col-12 col-md-6 p-0 m-auto">
-                            <div class="card-header text-center">
-                                <h5>
-                                    You give <b>{{ from_curr }}</b>, you get
-                                    <b>{{ to_curr }}</b>
-                                </h5>
-                            </div>
-                            <div class="card-body text-center">
-                                {{ converted_amount }}
-                            </div>
-                        </div>
-                    {% endif %}
-
-                    <div class="submit-btn mt-3 text-center">
-                        <button type="submit" class="btn btn-primary">Convert</button>
-                    </div>
-                </form>
+                <!-- To currency -->
+                <div class="form-group col-md-4 mb-3">
+                    <label for="to-curr">To currency</label>
+                    <select class="form-control" id="to-curr" name="to-curr">
+                        {% for curr in currencies %}
+                            <option value="{{ curr }}" {% if to_curr == curr %}selected{% endif %}>
+                                {{ curr }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
             </div>
-        </div>
+
+            <hr>
+
+            <!-- Errors -->
+            {% if error %}
+                <div class="alert alert-danger text-center mt-3">
+                    {{ error }}
+                </div>
+            {% endif %}
+
+            <!-- Result -->
+            {% if converted_amount %}
+                <div class="card result-card col-12 col-md-8 p-0 m-auto mt-3">
+                    <div class="card-header text-center">
+                        <h5>
+                            You give <b>{{ from_curr }}</b>, you get <b>{{ to_curr }}</b>
+                        </h5>
+                    </div>
+                    <div class="card-body text-center">
+                        {{ converted_amount }}
+                    </div>
+                </div>
+            {% endif %}
+
+            <!-- Submit -->
+            <div class="submit-btn mt-4">
+                <button type="submit" class="btn btn-primary">
+                    Convert
+                </button>
+            </div>
+        </form>
     </div>
+</div>
 {% endblock %}
