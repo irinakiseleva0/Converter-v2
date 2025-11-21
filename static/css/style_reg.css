@@ -1,5 +1,69 @@
-body{
-    font-family: Tahoma;
-    margin = 0;
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    background: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
 
+form {
+    background: #ffffff;
+    padding: 30px 40px;
+    border-radius: 12px;
+    width: 350px;
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.1),
+        0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 26px;
+    color: #333;
+}
+
+.group {
+    margin-bottom: 18px;
+}
+
+.group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: #444;
+}
+
+.group input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.group input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #0056cc;
 }
