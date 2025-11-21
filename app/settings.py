@@ -77,3 +77,6 @@ STATICFILES_DIRS = [
 ]
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+LOGIN_REDIRECT_URL = 'converter'  # после успешного login
+LOGOUT_REDIRECT_URL = 'home'      # запасной вариант (у нас уже стоит next_page в LogoutView)
+LOGIN_URL = 'login'

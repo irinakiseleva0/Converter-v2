@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.contrib.auth import login as auth_login
 import requests
 
 
@@ -14,6 +15,7 @@ def welcome(request):
 
 
 def exchange(request):
+    # Получаем курсы
     try:
         response = requests.get('https://api.exchangerate-api.com/v4/latest/USD', timeout=5)
         data = response.json()
@@ -68,13 +70,14 @@ def REG_FUNC(request):
         elif User.objects.filter(username=username).exists():
             messages.error(request, "This username is already taken.")
         else:
-            User.objects.create_user(
+            user = User.objects.create_user(
                 username=username,
                 email=email,
                 password=password1
             )
-            messages.success(request, "Registration successful! You can now use the converter.")
-            # После успешной регистрации сразу на конвертер
+            # сразу логиним пользователя
+            auth_login(request, user)
+            messages.success(request, "Registration successful! You are now logged in.")
             return redirect('converter')
 
     return render(request, 'exchange_app/index_reg.html')

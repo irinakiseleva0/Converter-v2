@@ -1,0 +1,46 @@
+{% extends 'exchange_app/base.html' %}
+
+{% block content %}
+<div class="register-wrapper">
+    <div class="register-card card">
+        <div class="card-header text-center">
+            <h3 class="converter-title">Sign in</h3>
+            <p class="text-muted mb-0" style="font-size: 14px;">
+                Log in to your account or go back to the converter.
+            </p>
+        </div>
+
+        <form method="POST" class="p-3">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                {% for error in form.non_field_errors %}
+                <div>{{ error }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="id_username">Username</label>
+                {{ form.username|add_class:"form-control" }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_password">Password</label>
+                {{ form.password|add_class:"form-control" }}
+            </div>
+
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-stretch mt-3">
+                <button type="submit" class="btn btn-primary mb-2 mb-md-0">
+                    Login
+                </button>
+
+                <a href="{% url 'converter' %}" class="btn btn-outline-secondary">
+                    Continue without login
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
