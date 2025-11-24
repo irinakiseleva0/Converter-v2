@@ -1,13 +1,15 @@
 from pathlib import Path
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "django-insecure-#v$bu!ruq#v29rac6a0q*_lj91k@0j4wtf=4babb+-vvpfx&h="
+# ===== Secret key & Debug =====
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "django-insecure-default-key")
+DEBUG = os.getenv("DJANGO_DEBUG", "True") == "True"
 
-DEBUG = True
+ALLOWED_HOSTS = ["*"]  # Render выдаст домен — потом можно заменить
 
-ALLOWED_HOSTS: list[str] = []
-
+# Application definition
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -22,7 +24,12 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+
+    # WhiteNoise для обслуживания статики в продакшене
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -41,6 +48,7 @@ TEMPLATES = [
             "context_processors": [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
+                "django.template.context_processors.i18n",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
             ],
@@ -50,7 +58,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "app.wsgi.application"
 
-
+# Database
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -58,7 +66,7 @@ DATABASES = {
     }
 }
 
-
+# Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
@@ -66,17 +74,49 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-LANGUAGE_CODE = "en-us"
-TIME_ZONE = "UTC"
+# ===== i18n / языки =====
+LANGUAGE_CODE = "en"
+
 USE_I18N = True
 USE_TZ = True
+TIME_ZONE = "UTC"
 
+LANGUAGES = [
+    ("en", "English"),
+    ("ru", "Russian"),
+    ("fr", "French"),
+]
+
+LOCALE_PATHS = [
+    BASE_DIR / "locale",
+]
+
+# ===== Static Files =====
 STATIC_URL = "/static/"
+
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# WhiteNoise storage
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+# CSRF (Render)
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.onrender.com",
+]
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-LOGIN_REDIRECT_URL = 'converter'  # после успешного login
-LOGOUT_REDIRECT_URL = 'home'      # запасной вариант (у нас уже стоит next_page в LogoutView)
-LOGIN_URL = 'login'
+
+# Auth redirects
+LOGIN_REDIRECT_URL = "converter"
+LOGOUT_REDIRECT_URL = "home"
+LOGIN_URL = "login"
+STATIC_URL = "/static/"
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
