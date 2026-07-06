@@ -16,15 +16,19 @@ def welcome(request):
 
 def exchange(request):
     # Получаем курсы
+    error_message = None
     try:
         response = requests.get('https://api.exchangerate-api.com/v4/latest/USD', timeout=5)
+        response.raise_for_status()
         data = response.json()
-        currencies = data.get('rates', {})
+        currencies = dict(sorted(data.get('rates', {}).items()))
     except Exception:
         currencies = {}
+        error_message = "Currency service is temporarily unavailable. Please try again in a moment."
 
     context = {
-        'currencies': currencies
+        'currencies': currencies,
+        'service_error': error_message,
     }
 
     if request.method == 'POST':

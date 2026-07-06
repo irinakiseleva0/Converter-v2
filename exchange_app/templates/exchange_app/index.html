@@ -7,6 +7,10 @@
             <h3 class="converter-title">Currency Converter</h3>
         </div>
 
+        {% if service_error %}
+            <p style="color:#b91c1c; background:#fee2e2; padding:8px 12px; border-radius:6px; margin-bottom:12px;">{{ service_error }}</p>
+        {% endif %}
+
         <form id="form" class="p-3" action="" method="POST">
             {% csrf_token %}
 
@@ -25,7 +29,7 @@
                 </div>
 
                 <!-- From currency -->
-                <div class="form-group col-md-4 mb-3">
+                <div class="form-group col-md-3 mb-3">
                     <label for="from_curr">From currency</label>
                     <select class="form-control" id="from_curr" name="from-curr">
                         {% for curr in currencies %}
@@ -36,8 +40,14 @@
                     </select>
                 </div>
 
+                <div class="form-group col-md-2 mb-3 d-flex align-items-end">
+                    <button type="button" id="swap-currencies" class="btn btn-light" aria-label="Swap currencies">
+                        Swap
+                    </button>
+                </div>
+
                 <!-- To currency -->
-                <div class="form-group col-md-4 mb-3">
+                <div class="form-group col-md-3 mb-3">
                     <label for="to-curr">To currency</label>
                     <select class="form-control" id="to-curr" name="to-curr">
                         {% for curr in currencies %}
@@ -81,4 +91,18 @@
         </form>
     </div>
 </div>
+<script>
+    document.querySelector('#swap-currencies')?.addEventListener('click', function () {
+        var fromSelect = document.querySelector('select[name="from-curr"]');
+        var toSelect = document.querySelector('select[name="to-curr"]');
+
+        if (!fromSelect || !toSelect) {
+            return;
+        }
+
+        var fromValue = fromSelect.value;
+        fromSelect.value = toSelect.value;
+        toSelect.value = fromValue;
+    });
+</script>
 {% endblock %}

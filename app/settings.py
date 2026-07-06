@@ -5,7 +5,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # ===== Secret key & Debug =====
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "django-insecure-default-key")
-DEBUG = os.getenv("DJANGO_DEBUG", "True") == "True"
+DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = ["*"]  # Render выдаст домен — потом можно заменить
 
