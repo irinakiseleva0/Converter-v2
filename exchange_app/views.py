@@ -6,6 +6,8 @@ from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 import requests
 
+from .models import ConversionHistory
+
 
 def welcome(request):
     """
@@ -57,10 +59,22 @@ def exchange(request):
                     2
                 )
                 context['converted_amount'] = converted_amount
+
+                if request.user.is_authenticated:
+                    ConversionHistory.objects.create(
+                        user=request.user,
+                        from_currency=from_curr,
+                        to_currency=to_curr,
+                        amount=from_amount,
+                        converted_amount=converted_amount,
+                    )
             else:
                 context['error'] = "Unknown currency code."
         except (TypeError, ValueError):
             context['error'] = "Invalid amount."
+
+    if request.user.is_authenticated:
+        context['history'] = ConversionHistory.objects.filter(user=request.user)[:10]
 
     return render(request, 'exchange_app/index.html', context)
 
