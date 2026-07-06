@@ -47,7 +47,11 @@ def exchange(request):
         try:
             from_amount = float(from_amount_raw)
 
-            if from_curr in currencies and to_curr in currencies:
+            if from_amount <= 0:
+                context['error'] = "Amount must be greater than zero."
+            elif from_amount > 1_000_000_000:
+                context['error'] = "Amount is too large."
+            elif from_curr in currencies and to_curr in currencies:
                 converted_amount = round(
                     (currencies[to_curr] / currencies[from_curr]) * from_amount,
                     2
