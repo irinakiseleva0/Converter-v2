@@ -1,4 +1,8 @@
-db.sqlite3
-venv/
+@"
 __pycache__/
 *.pyc
+staticfiles/
+db.sqlite3
+.env
+venv/
+"@ | Out-File -Encoding utf8 .gitignore
