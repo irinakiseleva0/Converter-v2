@@ -90,6 +90,33 @@
                 </button>
             </div>
         </form>
+        {% if user.is_authenticated and history %}
+        <div class="conversion-history mt-4">
+            <h5>Recent conversions</h5>
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Amount</th>
+                        <th>Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in history %}
+                    <tr>
+                        <td>{{ item.created_at|date:"d M, H:i" }}</td>
+                        <td>{{ item.from_currency }}</td>
+                        <td>{{ item.to_currency }}</td>
+                        <td>{{ item.amount }}</td>
+                        <td>{{ item.converted_amount }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
     </div>
 </div>
 <script>
