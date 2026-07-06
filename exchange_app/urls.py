@@ -1,5 +1,6 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
+from . import api_views
 from .views import exchange, REG_FUNC, welcome
 
 urlpatterns = [
@@ -8,6 +9,7 @@ urlpatterns = [
 
     # конвертер
     path('converter/', exchange, name='converter'),
+    path('api/convert/', api_views.convert_api, name='convert_api'),
 
     # регистрация
     path('register/', REG_FUNC, name='register'),
