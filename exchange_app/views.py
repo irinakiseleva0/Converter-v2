@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import login as auth_login
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 import requests
 
 
@@ -73,15 +75,22 @@ def REG_FUNC(request):
             messages.error(request, "Passwords do not match.")
         elif User.objects.filter(username=username).exists():
             messages.error(request, "This username is already taken.")
+        elif email and User.objects.filter(email=email).exists():
+            messages.error(request, "This email is already registered.")
         else:
-            user = User.objects.create_user(
-                username=username,
-                email=email,
-                password=password1
-            )
-            # сразу логиним пользователя
-            auth_login(request, user)
-            messages.success(request, "Registration successful! You are now logged in.")
-            return redirect('converter')
+            try:
+                validate_password(password1)
+            except ValidationError as e:
+                for err in e.messages:
+                    messages.error(request, err)
+            else:
+                user = User.objects.create_user(
+                    username=username,
+                    email=email,
+                    password=password1
+                )
+                auth_login(request, user)
+                messages.success(request, "Registration successful! You are now logged in.")
+                return redirect('converter')
 
     return render(request, 'exchange_app/index_reg.html')
